@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ block "title" . }}My Blog{{ end }}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    {{ template "nav" . }}
+    
+    <div class="container">
+        {{ block "content" . }}{{ end }}
+    </div>
+    
+    <footer>
+        <p>&copy; 2024 My Personal Blog</p>
+    </footer>
+</body>
+</html>
+
