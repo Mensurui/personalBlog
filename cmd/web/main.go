@@ -11,11 +11,19 @@ type Blog struct {
 }
 
 type application struct {
+	templateCache TemplateCache
 }
 
 func main() {
-	app := &application{}
-	err := http.ListenAndServe(":8080", app.routes())
+	templateCache, err := newTemplateCache()
+	if err != nil {
+		log.Println("error")
+	}
+
+	app := &application{
+		templateCache: templateCache,
+	}
+	err = http.ListenAndServe(":8080", app.routes())
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -13,5 +13,6 @@ func (app *application) routes() http.Handler {
 
 	router.HandlerFunc(http.MethodGet, "/", app.home)
 	router.HandlerFunc(http.MethodGet, "/about", app.about)
+	router.HandlerFunc(http.MethodGet, "/articles", app.articles)
 	return router
 }

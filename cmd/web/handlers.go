@@ -1,55 +1,24 @@
 package main
 
 import (
-	"html/template"
-	"log"
 	"net/http"
-	"path/filepath"
 )
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
-
-	files := []string{
-		filepath.Join("ui", "html", "base.tmpl"),
-		filepath.Join("ui", "html", "pages", "home.tmpl"),
-		filepath.Join("ui", "html", "partials", "nav.tmpl"),
-	}
-
-	ts, err := template.ParseFiles(files...)
-
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
-	title := "First Blog"
-	content := "My first content"
+	title := "Something"
+	content := "Some Content"
 	data := &Blog{
 		Title:   title,
 		Content: content,
 	}
-
-	err = ts.Execute(w, data)
-
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
+	app.render(w, http.StatusOK, "home.tmpl", data)
 
 }
 
 func (app *application) about(w http.ResponseWriter, r *http.Request) {
-	files := []string{
-		filepath.Join("ui", "html", "base.tmpl"),
-		filepath.Join("ui", "html", "pages", "about.tmpl"),
-		filepath.Join("ui", "html", "partials", "nav.tmpl"),
-	}
+	app.render(w, http.StatusOK, "about.tmpl", nil)
+}
 
-	ts, err := template.ParseFiles(files...)
-
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
-
-	err = ts.Execute(w, nil)
+func (app *application) articles(w http.ResponseWriter, r *http.Request) {
+	app.render(w, http.StatusOK, "articles.tmpl", nil)
 }
