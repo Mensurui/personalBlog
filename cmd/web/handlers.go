@@ -5,12 +5,13 @@ import (
 )
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
-	title := "Something"
-	content := "Some Content"
-	data := &Blog{
-		Title:   title,
-		Content: content,
+	data, err := app.articleModel.Get(1)
+
+	if err != nil {
+		http.Error(w, "Unable to retrieve article", http.StatusInternalServerError)
+		return
 	}
+
 	app.render(w, http.StatusOK, "home.tmpl", data)
 
 }

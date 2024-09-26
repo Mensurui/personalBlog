@@ -3,17 +3,14 @@ package main
 import (
 	"context"
 	"flag"
+	"github.com/Mensurui/personalBlog.git/internals/models"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"log"
 	"net/http"
 )
 
-type Blog struct {
-	Title   string
-	Content string
-}
-
 type application struct {
+	articleModel  *models.ArticleModel
 	templateCache TemplateCache
 }
 
@@ -27,6 +24,7 @@ func main() {
 		log.Println("Connection error: %v", err)
 		return
 	}
+	articleDB := &models.ArticleModel{DB: db}
 	log.Println("Connection working")
 	defer db.Close()
 	templateCache, err := newTemplateCache()
@@ -36,6 +34,7 @@ func main() {
 
 	app := &application{
 		templateCache: templateCache,
+		articleModel:  articleDB,
 	}
 	err = http.ListenAndServe(":8080", app.routes())
 	if err != nil {

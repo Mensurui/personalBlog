@@ -2,11 +2,12 @@ package main
 
 import (
 	"bytes"
+	"github.com/Mensurui/personalBlog.git/internals/models"
 	"log"
 	"net/http"
 )
 
-func (app *application) render(w http.ResponseWriter, status int, page string, data *Blog) {
+func (app *application) render(w http.ResponseWriter, status int, page string, data *models.Article) {
 	template, ok := app.templateCache[page]
 	if !ok {
 		log.Printf("The template %s doesn't exist", page)
