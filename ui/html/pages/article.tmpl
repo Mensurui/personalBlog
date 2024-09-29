@@ -1,0 +1,13 @@
+{{ define "content" }}
+    <div class="container">
+    {{ with .Article }}
+        <article class="single-article">
+            <h1 class="article-title">{{.Title}}</h1>
+            <div class="article-content">
+            <p>{{.Content}}</p>
+            </div>
+        </article>
+        {{end}}
+    </div>
+{{ end }}
+

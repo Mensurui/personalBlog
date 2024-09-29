@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/Mensurui/personalBlog.git/internals/models"
 	"github.com/Mensurui/personalBlog.git/ui"
 	"html/template"
 	"io/fs"
@@ -11,8 +12,15 @@ import (
 
 type TemplateCache map[string]*template.Template
 
-func newTemplateCache() (TemplateCache, error) {
-	cache := make(TemplateCache)
+type templateData struct {
+	Article         *models.Article
+	Articles        []*models.Article
+	User            *models.Users
+	IsAuthenticated bool
+}
+
+func newTemplateCache() (map[string]*template.Template, error) {
+	cache := map[string]*template.Template{}
 
 	pages, err := fs.Glob(ui.Files, "html/pages/*.tmpl")
 

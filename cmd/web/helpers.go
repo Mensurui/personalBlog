@@ -2,12 +2,11 @@ package main
 
 import (
 	"bytes"
-	"github.com/Mensurui/personalBlog.git/internals/models"
 	"log"
 	"net/http"
 )
 
-func (app *application) render(w http.ResponseWriter, status int, page string, data *models.Article) {
+func (app *application) render(w http.ResponseWriter, status int, page string, data *templateData) {
 	template, ok := app.templateCache[page]
 	if !ok {
 		log.Printf("The template %s doesn't exist", page)
@@ -30,4 +29,22 @@ func (app *application) render(w http.ResponseWriter, status int, page string, d
 	// Write status code and content after successful template execution
 	w.WriteHeader(status)
 	buf.WriteTo(w)
+}
+
+func (app *application) newTemplateData(r *http.Request) *templateData {
+	userID, ok := app.sessionManager.Get(r.Context(), "authenticatedUserID").(int)
+	return &templateData{
+		IsAuthenticated: ok && userID > 0,
+	}
+}
+
+func (app *application) isAuthenticated(r *http.Request) bool {
+	isAuthenticated, ok := r.Context().Value(isAuthenticatedContextKey).(bool)
+	if !ok {
+		return false
+	}
+	log.Println("Successfully Authenticated")
+	log.Printf("User authenticated: %v", isAuthenticated)
+
+	return isAuthenticated
 }

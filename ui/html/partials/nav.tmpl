@@ -1,11 +1,21 @@
 {{define "nav"}}
-<nav>
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/articles">Articles</a></li>
+<nav style="display: flex; justify-content: space-between; align-items: center;">
+    <ul style="display: flex; list-style: none; margin: 0; padding: 0;">
+        <li style="margin-right: 20px;"><a href="/">Home</a></li>
+        <li style="margin-right: 20px;"><a href="/about">About</a></li>
+        {{ if .IsAuthenticated}}
+        <li><a href="/write">Write</a></li>
+        {{ else }}
+        {{ end }}
     </ul>
+    <div>
+    {{if .IsAuthenticated}}
+    <a href="/logout" style="padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">Log Out</a>
+    {{else}}
+        <a href="/signup" style="padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;">Sign Up</a>
+        <a href="/login" style="padding: 10px 20px; background-color: #007BFF; color: white; text-decoration: none; border-radius: 5px;"> Login </a>
+        {{end}}
+    </div>
 </nav>
-
 {{end}}
 
